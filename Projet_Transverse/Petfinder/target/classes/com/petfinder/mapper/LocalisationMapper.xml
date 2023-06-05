@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petfinder.mapper.LocalisationMapper">
+
+    <resultMap id="localisation" type="localisation">
+        <id property="idLocalisation" column="id_Localisation"/>
+        <result property="villeLocalisation" column="ville_Localisation"/>
+        <result property="cpLocalisation" column="cp_Localisation"/>
+        <result property="rueLocalisation" column="rue_Localisation"/>
+    </resultMap>
+
+    <sql id="localisation">
+        id_Localisation,ville_Localisation,cp_Localisation,rue_Localisation
+    </sql>
+
+
+    <insert id="addLocalisation" keyProperty="idLocalisation" useGeneratedKeys="true">
+        insert into localisation (ville_Localisation,cp_Localisation,rue_Localisation) values (#{villeLocalisation},#{cpLocalisation},#{rueLocalisation})
+    </insert>
+
+    <select id="selectLocalisationById" resultMap="localisation">
+        select <include refid="localisation"></include> from localisation where id_Localisation = #{id}
+    </select>
+
+    <delete id="deleteLocalisationById">
+        delete from localisation where id_Localisation = #{idLocalisation}
+    </delete>
+
+    <update id="updateLocalisationById">
+        update localisation set ville_Localisation = #{villeLocalisation},cp_Localisation = #{cpLocalisation},rue_Localisation = #{rueLocalisation}
+        where id_Localisation = #{idLocalisation}
+    </update>
+</mapper>

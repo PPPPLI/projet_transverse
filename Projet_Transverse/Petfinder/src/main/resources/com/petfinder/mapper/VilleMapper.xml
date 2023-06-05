@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petfinder.mapper.VilleMapper">
+
+    <resultMap id="ville" type="ville">
+        <id property="idVille" column="id_Ville"/>
+        <result property="nomVille" column="nom_Ville"/>
+        <result property="cpVille" column="cp_Ville"/>
+    </resultMap>
+
+    <select id="selectAllVille" resultMap="ville">
+        select nom_Ville, cp_Ville,id_Ville from liste_ville order by nom_Ville asc;
+    </select>
+
+    <select id="selectVilleByName" resultMap="ville">
+        select * from liste_ville where nom_Ville = #{nomVille}
+    </select>
+</mapper>

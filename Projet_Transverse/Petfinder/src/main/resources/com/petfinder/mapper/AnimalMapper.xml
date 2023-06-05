@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petfinder.mapper.AnimalMapper">
+
+    <resultMap id="animal" type="Animal">
+        <id property="idAnimal" column="id_Animal"/>
+        <result property="nomAnimal" column="nom_Animal"/>
+        <result property="typeAnimal" column="type_Animal"/>
+        <result property="sexeAnimal" column="sexe_Animal"/>
+        <result property="couleurAnimal" column="couleur_Animal"/>
+        <result property="dateAnimal" column="date_Animal"/>
+        <result property="etatAnimal" column="etat_Animal"/>
+        <result property="photoAnimal" column="photo_Animal"/>
+        <result property="descriptionAnimal" column="description_Animal"/>
+        <result property="raceAnimal" column="race_Animal"/>
+        <association property="utilisateur" javaType="Utilisateur">
+            <id property="idUtilisateur" column="id_Utilisateur"/>
+            <result property="nomUtilisateur" column="nom_Utilisateur"/>
+            <result property="prenomUtilisateur" column="prenom_utilisateur"/>
+            <result property="civilite" column="civilité"/>
+            <result property="emailUtilisateur" column="email_Utilisateur"/>
+            <result property="telUtilisateur" column="tel_Utilisateur"/>
+            <result property="passwordUtilisateur" column="password_Utilisateur"/>
+            <result property="accesAdmin" column="acces_Admin"/>
+            <association property="localisation" javaType="Localisation" >
+                <id property="idLocalisation" column="id_Localisation"/>
+                <result property="villeLocalisation" column="ville_Localisation"/>
+                <result property="cpLocalisation" column="cp_Localisation"/>
+                <result property="rueLocalisation" column="rue_Localisation"/>
+            </association>
+        </association>
+        <association property="localisation" javaType="Localisation">
+            <id property="idLocalisation" column="id_Localisation"/>
+            <result property="villeLocalisation" column="ville_Localisation"/>
+            <result property="cpLocalisation" column="cp_Localisation"/>
+            <result property="rueLocalisation" column="rue_Localisation"/>
+        </association>
+    </resultMap>
+
+    <insert id="addAnimal" useGeneratedKeys="true" keyProperty="idAnimal" parameterType="animal">
+        insert into animal (photo_Animal) values (#{photoAnimal});
+    </insert>
+
+    <update id="updateAnimal">
+        update animal set nom_Animal = #{nomAnimal},type_Animal = #{typeAnimal},sexe_Animal = #{sexeAnimal},couleur_Animal = #{couleurAnimal},
+                          date_Animal = #{dateAnimal},etat_Animal = #{etatAnimal},description_Animal = #{descriptionAnimal},id_Utilisateur = #{utilisateur.idUtilisateur},
+                          id_Localisation = #{localisation.idLocalisation}, race_Animal = #{raceAnimal} where id_Animal = #{idAnimal}
+    </update>
+
+    <select id="getAnimal" resultMap="animal">
+        select * from animal where etat_Animal = #{etat} order by id_Animal desc limit 10;
+    </select>
+
+</mapper>

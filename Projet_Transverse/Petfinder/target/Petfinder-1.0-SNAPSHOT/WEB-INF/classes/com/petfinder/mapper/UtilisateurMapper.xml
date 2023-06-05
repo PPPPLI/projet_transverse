@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petfinder.mapper.UtilisateurMapper">
+
+    <resultMap id="utilisateur" type="utilisateur">
+        <id property="idUtilisateur" column="id_Utilisateur"/>
+        <result property="nomUtilisateur" column="nom_Utilisateur"/>
+        <result property="prenomUtilisateur" column="prenom_utilisateur"/>
+        <result property="civilite" column="civilité"/>
+        <result property="emailUtilisateur" column="email_Utilisateur"/>
+        <result property="telUtilisateur" column="tel_Utilisateur"/>
+        <result property="passwordUtilisateur" column="password_Utilisateur"/>
+        <result property="accesAdmin" column="acces_Admin"/>
+        <association property="localisation" javaType="Localisation" >
+            <id property="idLocalisation" column="id_Localisation"/>
+            <result property="villeLocalisation" column="ville_Localisation"/>
+            <result property="cpLocalisation" column="cp_Localisation"/>
+            <result property="rueLocalisation" column="rue_Localisation"/>
+        </association>
+    </resultMap>
+
+    <sql id="user">
+        nom_Utilisateur,prenom_Utilisateur,civilité,email_Utilisateur,tel_Utilisateur,password_Utilisateur,id_Localisation
+    </sql>
+
+    <insert id="addUtilisateur" parameterType="utilisateur">
+
+        insert into utilisateur (<include refid="user"></include>)
+            values (#{nomUtilisateur},#{prenomUtilisateur},#{civilite},#{emailUtilisateur},#{telUtilisateur},#{passwordUtilisateur},#{localisation.idLocalisation})
+    </insert>
+
+    <select id="selectUtilisateurById" resultMap="utilisateur">
+
+        select id_Utilisateur,<include refid="user"></include> from utilisateur where email_Utilisateur = #{emailUtilisateur}
+    </select>
+
+    <select id="selectUtilisateurByEmailAndPwd" resultMap="utilisateur">
+
+        select id_Utilisateur,<include refid="user"></include> from utilisateur where email_Utilisateur = #{email} and password_Utilisateur = #{pwd}
+    </select>
+
+    <delete id="deleteUtilisateur">
+
+        delete from utilisateur where email_Utilisateur = #{email} and  password_Utilisateur = #{pwd}
+    </delete>
+
+    <update id="updateUtilisateur" parameterType="utilisateur">
+        update utilisateur set  nom_Utilisateur = #{nomUtilisateur},prenom_Utilisateur = #{prenomUtilisateur},
+                                tel_Utilisateur = #{telUtilisateur}, password_Utilisateur = #{passwordUtilisateur}
+                                where email_Utilisateur = #{emailUtilisateur}
+
+    </update>
+
+    <select id="selectUtilisateurByEmail" resultMap="utilisateur">
+
+        select id_Utilisateur,<include refid="user"></include> from utilisateur where email_Utilisateur = #{email}
+    </select>
+
+
+
+</mapper>

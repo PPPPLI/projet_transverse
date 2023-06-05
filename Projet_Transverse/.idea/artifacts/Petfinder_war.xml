@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Petfinder:war">
+    <output-path>$PROJECT_DIR$/Petfinder/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>Petfinder</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="Petfinder-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Petfinder:war exploded" />
+    </root>
+  </artifact>
+</component>
